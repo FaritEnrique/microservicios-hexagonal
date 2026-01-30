@@ -10,6 +10,12 @@ El proyecto consta de tres microservicios:
 *   **product-service:** Gestión de productos. Puerto: `8082`
 *   **order-service:** Gestión de pedidos. Puerto: `8083`
 
+## Enlaces a Docker Hub (Entregable)
+
+*   **User Service:** (Pegar enlace aquí)
+*   **Product Service:** (Pegar enlace aquí)
+*   **Order Service:** (Pegar enlace aquí)
+
 ## Requisitos Previos
 
 *   Java 17
@@ -18,7 +24,17 @@ El proyecto consta de tres microservicios:
 
 ## Configuración y Ejecución
 
-### 1. Ejecución con Docker Compose (Recomendado)
+### 1. Configuración de Variables (.env)
+
+Antes de iniciar, crea un archivo `.env` en la raíz del proyecto copiando el ejemplo:
+
+```bash
+cp .env.example .env
+```
+
+Esto configurará las credenciales de base de datos para Docker Compose.
+
+### 2. Ejecución con Docker Compose (Recomendado)
 
 Para levantar todo el entorno (microservicios y bases de datos) de una sola vez:
 
@@ -27,26 +43,29 @@ docker compose up --build
 ```
 
 Esto iniciará:
-*   3 contenedores de PostgreSQL (uno para cada servicio).
-*   Los 3 microservicios conectados a sus respectivas bases de datos.
+*   3 contenedores de PostgreSQL.
+*   Los 3 microservicios conectados a sus respectivas bases de datos (perfil `dev`).
 
-### 2. Ejecución Local (Desarrollo)
+### 3. Build & Push Manual a Docker Hub
 
-Cada microservicio tiene dos perfiles configurados:
+Si deseas subir las imágenes manualmente a Docker Hub:
 
-*   **local:** Usa base de datos H2 en memoria. Ideal para desarrollo rápido y pruebas.
-    *   Para ejecutar: `mvn spring-boot:run -Dspring-boot.run.profiles=local`
-*   **dev:** Usa base de datos PostgreSQL. Requiere tener las bases de datos levantadas o configurar las variables de entorno.
+```bash
+# Login en Docker Hub
+docker login
 
-### 3. Variables de Entorno
+# User Service
+docker build -t TU_USUARIO/user-service:latest ./user-service
+docker push TU_USUARIO/user-service:latest
 
-Para el perfil `dev`, los servicios esperan las siguientes variables de entorno (ya configuradas en `docker-compose.yml`):
+# Product Service
+docker build -t TU_USUARIO/product-service:latest ./product-service
+docker push TU_USUARIO/product-service:latest
 
-*   `DB_URL`
-*   `DB_USERNAME`
-*   `DB_PASSWORD`
-
-Puedes crear un archivo `.env` en la raíz de cada servicio basado en `.env.example` (si existe) para ejecutar localmente con perfil `dev`.
+# Order Service
+docker build -t TU_USUARIO/order-service:latest ./order-service
+docker push TU_USUARIO/order-service:latest
+```
 
 ## Endpoints Principales
 
@@ -67,4 +86,6 @@ mvn test
 Cada microservicio incluye un `Jenkinsfile` configurado para:
 1.  Compilar el proyecto.
 2.  Ejecutar pruebas.
-3.  Construir y publicar la imagen Docker (requiere configuración de credenciales en Jenkins).
+3.  Construir y publicar la imagen Docker.
+
+**Nota:** Debes configurar las credenciales `dockerhub-credentials` en tu servidor Jenkins y actualizar el `DOCKER_HUB_USERNAME` en cada `Jenkinsfile`.

@@ -3,8 +3,8 @@ services:
     image: postgres:16
     environment:
       POSTGRES_DB: user_db
-      POSTGRES_USER: user_db_user
-      POSTGRES_PASSWORD: user_db_pass
+      POSTGRES_USER: ${USER_DB_USER}
+      POSTGRES_PASSWORD: ${USER_DB_PASS}
     ports:
       - "5433:5432"
 
@@ -12,8 +12,8 @@ services:
     image: postgres:16
     environment:
       POSTGRES_DB: product_db
-      POSTGRES_USER: product_db_user
-      POSTGRES_PASSWORD: product_db_pass
+      POSTGRES_USER: ${PRODUCT_DB_USER}
+      POSTGRES_PASSWORD: ${PRODUCT_DB_PASS}
     ports:
       - "5434:5432"
 
@@ -21,8 +21,8 @@ services:
     image: postgres:16
     environment:
       POSTGRES_DB: order_db
-      POSTGRES_USER: order_db_user
-      POSTGRES_PASSWORD: order_db_pass
+      POSTGRES_USER: ${ORDER_DB_USER}
+      POSTGRES_PASSWORD: ${ORDER_DB_PASS}
     ports:
       - "5435:5432"
 
@@ -31,8 +31,8 @@ services:
     environment:
       SPRING_PROFILES_ACTIVE: dev
       DB_URL: jdbc:postgresql://user-db:5432/user_db
-      DB_USERNAME: user_db_user
-      DB_PASSWORD: user_db_pass
+      DB_USERNAME: ${USER_DB_USER}
+      DB_PASSWORD: ${USER_DB_PASS}
     ports:
       - "8081:8081"
     depends_on:
@@ -43,8 +43,8 @@ services:
     environment:
       SPRING_PROFILES_ACTIVE: dev
       DB_URL: jdbc:postgresql://product-db:5432/product_db
-      DB_USERNAME: product_db_user
-      DB_PASSWORD: product_db_pass
+      DB_USERNAME: ${PRODUCT_DB_USER}
+      DB_PASSWORD: ${PRODUCT_DB_PASS}
     ports:
       - "8082:8082"
     depends_on:
@@ -55,8 +55,8 @@ services:
     environment:
       SPRING_PROFILES_ACTIVE: dev
       DB_URL: jdbc:postgresql://order-db:5432/order_db
-      DB_USERNAME: order_db_user
-      DB_PASSWORD: order_db_pass
+      DB_USERNAME: ${ORDER_DB_USER}
+      DB_PASSWORD: ${ORDER_DB_PASS}
     ports:
       - "8083:8083"
     depends_on:
