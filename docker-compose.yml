@@ -27,6 +27,7 @@ services:
       - "5435:5432"
 
   user-service:
+    image: faritenrique/user-service:latest
     build: ./user-service
     environment:
       SPRING_PROFILES_ACTIVE: dev
@@ -39,6 +40,7 @@ services:
       - user-db
 
   product-service:
+    image: faritenrique/product-service:latest
     build: ./product-service
     environment:
       SPRING_PROFILES_ACTIVE: dev
@@ -51,6 +53,7 @@ services:
       - product-db
 
   order-service:
+    image: faritenrique/order-service:latest
     build: ./order-service
     environment:
       SPRING_PROFILES_ACTIVE: dev
