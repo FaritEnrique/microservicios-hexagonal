@@ -73,6 +73,13 @@ docker push TU_USUARIO/order-service:latest
 *   **Product Service:** `/api/products`
 *   **Order Service:** `/api/orders`
 
+## Monitoreo (Actuator)
+
+Cada microservicio expone un endpoint de salud para verificar su estado:
+*   `http://localhost:8081/actuator/health`
+*   `http://localhost:8082/actuator/health`
+*   `http://localhost:8083/actuator/health`
+
 ## Pruebas
 
 Para ejecutar las pruebas unitarias y de integración:
