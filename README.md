@@ -12,9 +12,11 @@ El proyecto consta de tres microservicios:
 
 ## Enlaces a Docker Hub (Entregable)
 
-*   **User Service:** (Pegar enlace aquí)
-*   **Product Service:** (Pegar enlace aquí)
-*   **Order Service:** (Pegar enlace aquí)
+Aquí se encuentran las imágenes oficiales construidas y publicadas:
+
+*   **User Service:** [https://hub.docker.com/r/faritenrique/user-service](https://hub.docker.com/r/faritenrique/user-service)
+*   **Product Service:** [https://hub.docker.com/r/faritenrique/product-service](https://hub.docker.com/r/faritenrique/product-service)
+*   **Order Service:** [https://hub.docker.com/r/faritenrique/order-service](https://hub.docker.com/r/faritenrique/order-service)
 
 ## Requisitos Previos
 
@@ -48,23 +50,23 @@ Esto iniciará:
 
 ### 3. Build & Push Manual a Docker Hub
 
-Si deseas subir las imágenes manualmente a Docker Hub:
+Si deseas subir las imágenes manualmente a Docker Hub (aunque el Pipeline de Jenkins ya lo hace):
 
 ```bash
 # Login en Docker Hub
 docker login
 
 # User Service
-docker build -t TU_USUARIO/user-service:latest ./user-service
-docker push TU_USUARIO/user-service:latest
+docker build -t faritenrique/user-service:latest ./user-service
+docker push faritenrique/user-service:latest
 
 # Product Service
-docker build -t TU_USUARIO/product-service:latest ./product-service
-docker push TU_USUARIO/product-service:latest
+docker build -t faritenrique/product-service:latest ./product-service
+docker push faritenrique/product-service:latest
 
 # Order Service
-docker build -t TU_USUARIO/order-service:latest ./order-service
-docker push TU_USUARIO/order-service:latest
+docker build -t faritenrique/order-service:latest ./order-service
+docker push faritenrique/order-service:latest
 ```
 
 ## Endpoints Principales
@@ -90,9 +92,9 @@ mvn test
 
 ## CI/CD
 
-Cada microservicio incluye un `Jenkinsfile` configurado para:
-1.  Compilar el proyecto.
-2.  Ejecutar pruebas.
-3.  Construir y publicar la imagen Docker.
-
-**Nota:** Debes configurar las credenciales `dockerhub-credentials` en tu servidor Jenkins y actualizar el `DOCKER_HUB_USERNAME` en cada `Jenkinsfile`.
+Cada microservicio incluye un `Jenkinsfile` configurado para ejecutarse en un entorno Jenkins con Docker.
+El pipeline realiza los siguientes pasos:
+1.  **Checkout:** Obtiene el código fuente.
+2.  **Test & Build:** Ejecuta pruebas y compila el JAR.
+3.  **Docker Build:** Construye la imagen con tag de versión y latest.
+4.  **Docker Push:** Sube las imágenes a Docker Hub (requiere credencial `dockerhub-creds`).
